@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h1 { color: #333; }
+    .container { max-width: 800px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Playwright Test Fixture</h1>
+    <p id="test-content">This is a test page for Playwright</p>
+    <div id="test-area">
+      <button id="test-button">Click Me</button>
+      <div id="test-result"></div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('test-button').addEventListener('click', function() {
+      document.getElementById('test-result').textContent = 'Button clicked!';
+    });
+  </script>
+</body>
+</html>
