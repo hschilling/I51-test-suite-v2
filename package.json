@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "BIDARA deep chat",
   "main": "src/main.js",
+  "type": "module",
   "scripts": {
+    "build": "export ENV=\"prod\" || set ENV=\"prod\"; rollup -c --bundleConfigAsCjs",
+    "dev:bundle": "export ENV=\"dev\" || set ENV=\"dev\"; [ -z \"${SS_KEY}\"  ] && echo \"WARN: SS_KEY not set. Defaulting to ''\" && export SS_KEY=\"\" || set SS_KEY=\"\"; [ -z \"${PQAI_KEY}\"  ] && echo \"WARN: PQAI_KEY not set. Defaulting to ''\" && export PQAI_KEY=\"\" || set PQAI_KEY=\"\"; [ -z \"${TAV_KEY}\" ] && echo \"WARN: TAV_KEY not set. Defaulting to ''\" && export TAV_KEY=\"\" || set TAV_KEY=\"\"; rollup -c -w --bundleConfigAsCjs",
+    "dev:server": "sirv public --host 0.0.0.0 --port 8080 --dev",
     "start": "node src/main.js",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
@@ -25,7 +29,6 @@
     "sirv-cli": "^2.0.0",
     "svelte-agnostic-draggable": "^0.2.0",
     "svelte-touch-to-mouse": "^1.0.0"
-
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",
@@ -41,6 +44,5 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.2.2",
     "svelte": "^4.2.19"
-
   }
 }
