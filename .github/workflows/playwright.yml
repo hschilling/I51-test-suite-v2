@@ -42,11 +42,15 @@ jobs:
       run: npx playwright install --with-deps
       
     - name: Create a test HTML file
-      if: ${{ !fileExists('public/index.html') }}
       run: |
-        echo '<!DOCTYPE html><html><head><title>Test Page</title></head><body><h1>Test Page</h1></body></html>' > public/index.html
-        echo 'console.log("Test bundle");' > public/build/bundle.js
-        echo 'body { font-family: sans-serif; }' > public/build/bundle.css
+        if [ ! -f "public/index.html" ]; then
+          echo "Creating minimal test files..."
+          echo '<!DOCTYPE html><html><head><title>Test Page</title></head><body><h1>Test Page</h1></body></html>' > public/index.html
+          echo 'console.log("Test bundle");' > public/build/bundle.js
+          echo 'body { font-family: sans-serif; }' > public/build/bundle.css
+        else
+          echo "index.html exists, skipping creation of test files."
+        fi
       
     - name: Run Playwright tests
       run: npx playwright test
