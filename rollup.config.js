@@ -45,7 +45,17 @@ export default {
 				dev: !production
 			}
     }),
-		bakedEnv(),
+		bakedEnv({
+      // Explicitly include the env vars we need
+      include: ['SS_KEY', 'PQAI_KEY', 'TAV_KEY', 'ENV'],
+      // Provide default values
+      default: {
+        SS_KEY: '',
+        PQAI_KEY: '',
+        TAV_KEY: '',
+        ENV: production ? 'prod' : 'dev'
+      }
+    }),
     // we'll extract any component CSS out into
     // a separate file — better for performance
     css({ output: 'bundle.css' }),

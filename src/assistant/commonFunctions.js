@@ -5,7 +5,8 @@ import { getFileByFileId, getFileTypeByName, pushFile } from "../utils/threadUti
 // export SS_KEY="insert-ss-key-here"
 // ```
 // Defaults to empty string ""
-import { SS_KEY, PQAI_KEY, TAV_KEY } from 'process.env'; 
+// import { SS_KEY, PQAI_KEY, TAV_KEY } from 'process.env'; 
+import { SS_KEY, PQAI_KEY, TAV_KEY } from '../env.js';
 
 export async function ssSearch(params, context) {
   //call api and return results
