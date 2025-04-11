@@ -50,4 +50,10 @@ test('invalid OPENAI API KEY', async ({ page }) => {
       throw new Error('No input elements found on page');
     }
   }
+  // 5. Assert that the correct error text is present
+  const errorDiv = page.locator('#insert-key-input-invalid-text');
+  await errorDiv.waitFor({ state: 'visible' }); // Wait for the error message
+  const textContent = await errorDiv.textContent();
+  expect(textContent).toBe('Invalid API Key');
+  
 });
