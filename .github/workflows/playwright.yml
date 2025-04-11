@@ -32,6 +32,14 @@ jobs:
     - name: Create public directory if it doesn't exist
       run: mkdir -p public/build
       
+    - name: Patch environment variables import
+      run: |
+        echo "Patching environment variables import..."
+        # Create a temporary file with sed to avoid in-place issues
+        sed 's/import { SS_KEY, PQAI_KEY, TAV_KEY } from .*/const SS_KEY = ""; const PQAI_KEY = ""; const TAV_KEY = "";/' src/assistant/commonFunctions.js > tmp.js
+        cat tmp.js > src/assistant/commonFunctions.js
+        rm tmp.js
+      
     - name: Build app
       run: npm run build
       env:
