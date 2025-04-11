@@ -1,5 +1,6 @@
 // playwright.config.js
 import { defineConfig } from '@playwright/test';
+import fs from 'fs';
 
 export default defineConfig({
   testDir: './tests',
@@ -24,10 +25,15 @@ export default defineConfig({
       use: { browserName: 'chromium' },
     }
   ],
-  webServer: {
-    command: 'npx sirv public --host 0.0.0.0 --port 8080',
+  webServer: process.env.CI ? {
+    command: 'npx sirv public --host 0.0.0.0 --port 8080 --dev',
     url: 'http://localhost:8080',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
+    timeout: 120 * 1000,
+  } : {
+    command: 'npm run dev:server',
+    url: 'http://localhost:8080',
+    reuseExistingServer: true,
     timeout: 120 * 1000,
   },
 });
