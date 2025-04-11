@@ -2,6 +2,7 @@ import { getStoredAPIKey, setStoredAPIKey } from "./storageUtils";
 import { getActiveThread, getFileByFileId } from "./threadUtils";
 import { ASSISTANT_OPTIONS } from "../assistant";
 import { ENV } from "process.env";
+import { ENV } from "../env";
 
 // todo: test all functions with fetch calls to make sure they still work after the header refactor. (test with public openai, not azure.)
 /*
