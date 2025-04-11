@@ -35,7 +35,7 @@ jobs:
     - name: Create environment variables module
       run: |
         echo "Creating environment variables module..."
-        cat > src/env.js << 'EOF'
+        cat > src/env.js << EOF
         // Environment variables with defaults
         export const SS_KEY = "";
         export const PQAI_KEY = "";
@@ -67,27 +67,14 @@ jobs:
         TAV_KEY: ""
         ENV: "test"
       
-    - name: Debug directory structure
+    - name: Create or check index.html
       run: |
-        echo "Current directory structure:"
-        ls -la
-        echo "Public directory contents:"
-        ls -la public || echo "Public directory not found"
-        if [ -d "public/build" ]; then
-          echo "Public/build directory contents:"
-          ls -la public/build
-        else
-          echo "Public/build directory not found"
-        fi
-        
         # Check if index.html exists
         if [ -f "public/index.html" ]; then
           echo "index.html exists"
-          echo "First 100 lines of index.html:"
-          head -n 100 public/index.html
         else
           echo "index.html not found, creating a basic one..."
-          cat > public/index.html << 'EOF'
+          cat > public/index.html << EOF
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -103,6 +90,25 @@ jobs:
           </html>
           EOF
           echo "Created index.html"
+        fi
+      
+    - name: Debug directory structure
+      run: |
+        echo "Current directory structure:"
+        ls -la
+        echo "Public directory contents:"
+        ls -la public || echo "Public directory not found"
+        if [ -d "public/build" ]; then
+          echo "Public/build directory contents:"
+          ls -la public/build
+        else
+          echo "Public/build directory not found"
+        fi
+        
+        # Display index.html content
+        if [ -f "public/index.html" ]; then
+          echo "First 20 lines of index.html:"
+          head -n 20 public/index.html
         fi
       
     - name: Install Playwright browsers
