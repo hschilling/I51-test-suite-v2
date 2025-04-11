@@ -54,6 +54,6 @@ test('invalid OPENAI API KEY', async ({ page }) => {
   const errorDiv = page.locator('#insert-key-input-invalid-text');
   await errorDiv.waitFor({ state: 'visible' }); // Wait for the error message
   const textContent = await errorDiv.textContent();
-  expect(textContent).toBe('Invalid API Key');
+  expect(textContent).toBe('qqqInvalid API Key');
   
 });
