@@ -1,12 +1,11 @@
 // playwright.config.js
 import { defineConfig } from '@playwright/test';
-import fs from 'fs';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 30000,
   expect: {
-    timeout: 5000
+    timeout: 10000
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -15,9 +14,11 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:8080',
-    actionTimeout: 10000,
+    actionTimeout: 15000,
     navigationTimeout: 15000,
-    trace: 'on-first-retry',
+    trace: 'on',
+    screenshot: 'on',
+    video: 'on',
   },
   projects: [
     {
@@ -25,15 +26,6 @@ export default defineConfig({
       use: { browserName: 'chromium' },
     }
   ],
-  webServer: process.env.CI ? {
-    command: 'npx sirv public --host 0.0.0.0 --port 8080 --dev',
-    url: 'http://localhost:8080',
-    reuseExistingServer: false,
-    timeout: 120 * 1000,
-  } : {
-    command: 'npm run dev:server',
-    url: 'http://localhost:8080',
-    reuseExistingServer: true,
-    timeout: 120 * 1000,
-  },
+  // Note: We're starting the server manually in the GitHub Actions workflow
+  // and not using the webServer configuration here
 });

@@ -79,8 +79,19 @@ jobs:
     - name: Install Playwright browsers
       run: npx playwright install --with-deps
       
-    - name: Run Playwright tests with debugging
-      run: PWDEBUG=1 xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test --debug
+    - name: Start server in background
+      run: |
+        echo "Starting server..."
+        npx sirv public --port 8080 &
+        echo "Waiting for server to start..."
+        sleep 5
+        echo "Testing if server is running..."
+        curl -v http://localhost:8080/ || echo "Failed to connect to server"
+      
+    - name: Run Playwright tests
+      run: |
+        echo "Running tests without webServer config..."
+        xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test
       
     - uses: actions/upload-artifact@v4
       if: always()
