@@ -16,6 +16,8 @@ jobs:
       PQAI_KEY: ""
       TAV_KEY: ""
       ENV: "test"
+      # Pass the GitHub secret to the environment
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
     - uses: actions/checkout@v3
@@ -39,6 +41,7 @@ jobs:
         echo "export const PQAI_KEY = \"\";" >> src/env.js
         echo "export const TAV_KEY = \"\";" >> src/env.js
         echo "export const ENV = \"test\";" >> src/env.js
+        echo "export const OPENAI_API_KEY = \"$OPENAI_API_KEY\";" >> src/env.js
       
     - name: Patch environment variables imports
       run: |
@@ -63,6 +66,7 @@ jobs:
         PQAI_KEY: ""
         TAV_KEY: ""
         ENV: "test"
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       
     - name: Create or check index.html
       run: |
@@ -122,8 +126,10 @@ jobs:
       
     - name: Run Playwright tests
       run: |
-        echo "Running tests without webServer config..."
-        xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test
+        echo "Running tests with OPENAI_API_KEY environment variable..."
+        OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       
     - uses: actions/upload-artifact@v4
       if: always()
