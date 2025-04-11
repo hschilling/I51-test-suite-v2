@@ -34,14 +34,11 @@ jobs:
       
     - name: Create environment variables module
       run: |
-        echo "Creating environment variables module..."
-        cat > src/env.js << EOF
-        // Environment variables with defaults
-        export const SS_KEY = "";
-        export const PQAI_KEY = "";
-        export const TAV_KEY = "";
-        export const ENV = "test";
-        EOF
+        echo "// Environment variables with defaults" > src/env.js
+        echo "export const SS_KEY = \"\";" >> src/env.js
+        echo "export const PQAI_KEY = \"\";" >> src/env.js
+        echo "export const TAV_KEY = \"\";" >> src/env.js
+        echo "export const ENV = \"test\";" >> src/env.js
       
     - name: Patch environment variables imports
       run: |
@@ -74,21 +71,19 @@ jobs:
           echo "index.html exists"
         else
           echo "index.html not found, creating a basic one..."
-          cat > public/index.html << EOF
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>BIDARA Deep Chat</title>
-            <link rel="stylesheet" href="build/bundle.css">
-          </head>
-          <body>
-            <div id="app"></div>
-            <script src="build/bundle.js"></script>
-          </body>
-          </html>
-          EOF
+          echo "<!DOCTYPE html>" > public/index.html
+          echo "<html lang=\"en\">" >> public/index.html
+          echo "<head>" >> public/index.html
+          echo "  <meta charset=\"UTF-8\">" >> public/index.html
+          echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> public/index.html
+          echo "  <title>BIDARA Deep Chat</title>" >> public/index.html
+          echo "  <link rel=\"stylesheet\" href=\"build/bundle.css\">" >> public/index.html
+          echo "</head>" >> public/index.html
+          echo "<body>" >> public/index.html
+          echo "  <div id=\"app\"></div>" >> public/index.html
+          echo "  <script src=\"build/bundle.js\"></script>" >> public/index.html
+          echo "</body>" >> public/index.html
+          echo "</html>" >> public/index.html
           echo "Created index.html"
         fi
       
