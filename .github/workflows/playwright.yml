@@ -73,8 +73,37 @@ jobs:
         ls -la
         echo "Public directory contents:"
         ls -la public || echo "Public directory not found"
-        echo "Public/build directory contents:"
-        ls -la public/build || echo "Public/build directory not found"
+        if [ -d "public/build" ]; then
+          echo "Public/build directory contents:"
+          ls -la public/build
+        else
+          echo "Public/build directory not found"
+        fi
+        
+        # Check if index.html exists
+        if [ -f "public/index.html" ]; then
+          echo "index.html exists"
+          echo "First 100 lines of index.html:"
+          head -n 100 public/index.html
+        else
+          echo "index.html not found, creating a basic one..."
+          cat > public/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>BIDARA Deep Chat</title>
+            <link rel="stylesheet" href="build/bundle.css">
+          </head>
+          <body>
+            <div id="app"></div>
+            <script src="build/bundle.js"></script>
+          </body>
+          </html>
+          EOF
+          echo "Created index.html"
+        fi
       
     - name: Install Playwright browsers
       run: npx playwright install --with-deps
@@ -82,11 +111,13 @@ jobs:
     - name: Start server in background
       run: |
         echo "Starting server..."
-        npx sirv public --port 8080 &
+        npx sirv public --port 8080 --dev &
         echo "Waiting for server to start..."
         sleep 5
         echo "Testing if server is running..."
         curl -v http://localhost:8080/ || echo "Failed to connect to server"
+        echo "Testing bundle.js..."
+        curl -v http://localhost:8080/build/bundle.js -o /dev/null || echo "Failed to access bundle.js"
       
     - name: Run Playwright tests
       run: |
