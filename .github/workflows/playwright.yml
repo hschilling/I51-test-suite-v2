@@ -32,13 +32,32 @@ jobs:
     - name: Create public directory if it doesn't exist
       run: mkdir -p public/build
       
-    - name: Patch environment variables import
+    - name: Create environment variables module
       run: |
-        echo "Patching environment variables import..."
-        # Create a temporary file with sed to avoid in-place issues
-        sed 's/import { SS_KEY, PQAI_KEY, TAV_KEY } from .*/const SS_KEY = ""; const PQAI_KEY = ""; const TAV_KEY = "";/' src/assistant/commonFunctions.js > tmp.js
-        cat tmp.js > src/assistant/commonFunctions.js
-        rm tmp.js
+        echo "Creating environment variables module..."
+        cat > src/env.js << 'EOF'
+        // Environment variables with defaults
+        export const SS_KEY = "";
+        export const PQAI_KEY = "";
+        export const TAV_KEY = "";
+        export const ENV = "test";
+        EOF
+      
+    - name: Patch environment variables imports
+      run: |
+        echo "Patching commonFunctions.js..."
+        if grep -q "import.*from 'process.env'" src/assistant/commonFunctions.js; then
+          sed -i "s/import.*from 'process.env'/import { SS_KEY, PQAI_KEY, TAV_KEY } from '..\/env.js'/" src/assistant/commonFunctions.js
+        fi
+        
+        echo "Patching openaiUtils.js..."
+        if grep -q "import.*ENV.*from 'process.env'" src/utils/openaiUtils.js; then
+          sed -i "s/import.*ENV.*from 'process.env'/import { ENV } from '..\/env.js'/" src/utils/openaiUtils.js
+        fi
+        
+        # Find any other files importing from process.env
+        echo "Checking for other process.env imports..."
+        grep -r "import.*from 'process.env'" src || echo "No other imports found"
       
     - name: Build app
       run: npm run build
