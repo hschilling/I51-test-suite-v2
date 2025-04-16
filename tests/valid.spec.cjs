@@ -4,6 +4,10 @@ const { test, expect } = require('@playwright/test');
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 test('valid OPENAI API KEY', async ({ page }) => {
+
+
+  console.log("OPENAI_API_KEY", OPENAI_API_KEY);
+  
   // 1. Navigate to the page
   await page.goto('/', { waitUntil: 'networkidle' });
   

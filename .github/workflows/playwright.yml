@@ -42,6 +42,7 @@ jobs:
         echo "export const TAV_KEY = \"\";" >> src/env.js
         echo "export const ENV = \"test\";" >> src/env.js
         echo "export const OPENAI_API_KEY = \"$OPENAI_API_KEY\";" >> src/env.js
+        cat src/env.js
       
     - name: Patch environment variables imports
       run: |
@@ -70,6 +71,8 @@ jobs:
       
     - name: Create or check index.html
       run: |
+        echo "OPENAI_API_KEY"
+        echo $OPENAI_API_KEY
         # Check if index.html exists
         if [ -f "public/index.html" ]; then
           echo "index.html exists"
@@ -127,7 +130,9 @@ jobs:
     - name: Run Playwright tests
       run: |
         echo "Running tests with OPENAI_API_KEY environment variable..."
-        OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test
+        OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+        echo ${{ secrets.OPENAI_API_KEY }}
+        xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       
