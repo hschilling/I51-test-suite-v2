@@ -62,6 +62,8 @@ test('Does prompt cause response', async ({ page }) => {
 console.log('page.waitForLoadState');
 await page.waitForLoadState('networkidle');
 
+// Add a 10-second delay/wait
+await page.waitForTimeout(10000); // time in milliseconds (10000ms = 10 seconds)
 
 // Get the element with ID 'messages'
 console.log('Get the element with ID after load');
