@@ -67,13 +67,13 @@ await page.waitForTimeout(10000); // time in milliseconds (10000ms = 10 seconds)
 
 // Get the element with ID 'messages'
 console.log('Get the element with ID after load');
-const messagesDiv1 = await page.$('#messages');
-console.log("messagesDiv1", messagesDiv1);
+const messagesDiv = await page.$('#messages');
+// console.log("messagesDiv1", messagesDiv1);
 
 
 // count the number of div children before entering prompt
-const childDivCountBeforePrompt = await messagesDiv1.$$eval('div', divs => divs.length);
-console.log(`Number of child divs before prompt: ${childDivCountBeforePrompt}`);
+const childDivCountBeforeFill = await messagesDiv.$$eval('div', divs => divs.length);
+console.log(`Number of child divs before fill: ${childDivCountBeforeFill}`);
 
 // Type text into the contenteditable div
 // await page.locator('#text-input').type('Your text here');
@@ -81,31 +81,34 @@ console.log('fill');
 await page.locator('#text-input').fill('Your text here');
 
 
-console.log('Get the element with ID after fill');
-const messagesDiv2 = await page.$('#messages');
-console.log("messagesDiv after fill", messagesDiv2);
+const childDivCountAfterFill = await messagesDiv.$$eval('div', divs => divs.length);
+console.log(`Number of child divs after fill: ${childDivCountAfterFill}`);
+
+// console.log('Get the element with ID after fill');
+// const messagesDiv2 = await page.$('#messages');
+// console.log("messagesDiv after fill", messagesDiv2);
 
 // Click the button with the specified selector
 console.log('Click the button');
 await page.locator('#input > div:nth-child(5) > div').click();
 
+// Add a 10-second delay/wait
+await page.waitForTimeout(10000); // time in milliseconds (10000ms = 10 seconds)
 
-console.log('Get the element with ID after fill');
-const messagesDiv3 = await page.$('#messages');
-console.log("messagesDiv after click", messagesDiv3);
+const childDivCountAfterClick = await messagesDiv.$$eval('div', divs => divs.length);
+console.log(`Number of child divs after click: ${childDivCountAfterClick}`);
 
-// Get the element with ID 'messages'
-console.log('Get the element with ID');
-const messagesDiv = await page.$('#messages');
-
+// console.log('Get the element with ID after fill');
+// const messagesDiv3 = await page.$('#messages');
+// console.log("messagesDiv after click", messagesDiv3);
 
 
   // Count the number of direct div children after prompt
-  console.log('Count the number of direct div children');
-  const childDivCount = await messagesDiv.$$eval('div', divs => divs.length);
+//   console.log('Count the number of direct div children');
+//   const childDivCount = await messagesDiv.$$eval('div', divs => divs.length);
 
   // Log the count
-  console.log(`Number of child divs after prompt: ${childDivCount}`);
+//   console.log(`Number of child divs after prompt: ${childDivCount}`);
 
   // Optional: Add an assertion if you expect a specific number of children
   expect(childDivCount).toBeGreaterThan(0); // or use .toBe(expectedNumber)
