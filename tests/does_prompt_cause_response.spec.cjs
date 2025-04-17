@@ -72,8 +72,8 @@ console.log("messagesDiv1", messagesDiv1);
 
 
 // count the number of div children before entering prompt
-// const childDivCountBeforePrompt = await messagesDiv.$$eval('div', divs => divs.length);
-// console.log(`Number of child divs before prompt: ${childDivCountBeforePrompt}`);
+const childDivCountBeforePrompt = await messagesDiv1.$$eval('div', divs => divs.length);
+console.log(`Number of child divs before prompt: ${childDivCountBeforePrompt}`);
 
 // Type text into the contenteditable div
 // await page.locator('#text-input').type('Your text here');
