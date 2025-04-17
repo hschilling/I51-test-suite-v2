@@ -111,7 +111,7 @@ console.log(`Number of child divs after click: ${childDivCountAfterClick}`);
 //   console.log(`Number of child divs after prompt: ${childDivCount}`);
 
   // Optional: Add an assertion if you expect a specific number of children
-//   expect(childDivCount).toBeGreaterThan(0); // or use .toBe(expectedNumber)
+  expect(childDivCountAfterClick).toBeGreaterThan(0); // or use .toBe(expectedNumber)
 
 
 
