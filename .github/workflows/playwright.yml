@@ -59,7 +59,13 @@ jobs:
         # Find any other files importing from process.env
         echo "Checking for other process.env imports..."
         grep -r "import.*from 'process.env'" src || echo "No other imports found"
-      
+
+    - name: Check secrets
+      run: |
+        echo "Secret exists: ${{ secrets.OPENAI_API_KEY != '' }}"
+        # Don't do this in production - just for debugging
+        echo "First few characters: ${{ secrets.OPENAI_API_KEY != '' && format('{0}...', secrets.OPENAI_API_KEY[0]) }}"
+        
     - name: Build app
       run: npm run build
       env:
@@ -73,6 +79,7 @@ jobs:
       run: |
         echo "OPENAI_API_KEY"
         echo $OPENAI_API_KEY
+        echo ${{ secrets.OPENAI_API_KEY }}
         # Check if index.html exists
         if [ -f "public/index.html" ]; then
           echo "index.html exists"
