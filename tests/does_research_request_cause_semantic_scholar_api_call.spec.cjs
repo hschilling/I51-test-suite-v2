@@ -67,8 +67,13 @@ test('Does prompt cause BIDARA to make a call to the Semantic Scholar API', asyn
 console.log('page.waitForLoadState');
 await page.waitForLoadState('networkidle');
 
+
+
 // Add a 10-second delay/wait
 await page.waitForTimeout(10000); // time in milliseconds (10000ms = 10 seconds)
+
+await page.screenshot({ path: 'screenshot-after-waiting-for-next-page-to-load.png' });
+
 
 // Get the element with ID 'messages'
 console.log('Get the element with ID after load');
@@ -85,6 +90,9 @@ console.log(`Number of child divs before fill: ${childDivCountBeforeFill}`);
 console.log('fill');
 await page.locator('#text-input').fill('please give me a set of research papers about honeycombs');
 
+
+
+await page.screenshot({ path: 'screenshot-after-filling-in-prompt.png' });
 
 const childDivCountAfterFill = await messagesDiv.$$eval('div', divs => divs.length);
 console.log(`Number of child divs after fill: ${childDivCountAfterFill}`);
@@ -117,6 +125,9 @@ console.log(`Number of child divs after click: ${childDivCountAfterClick}`);
 
   // Optional: Add an assertion if you expect a specific number of children
   expect(childDivCountAfterClick).toBeGreaterThan(0); // or use .toBe(expectedNumber)
+
+
+  await page.screenshot({ path: 'screenshot-after-submitting-prompt.png' });
 
 
   try {
