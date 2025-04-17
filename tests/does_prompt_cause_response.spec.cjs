@@ -62,13 +62,9 @@ test('Does prompt cause response', async ({ page }) => {
 console.log('page.waitForLoadState');
 await page.waitForLoadState('networkidle');
 
-// Get the element with ID 'messages'
-console.log('Get the element with ID');
-const messagesDiv = await page.$('#messages');
-
 // count the number of div children before entering prompt
-const childDivCountBeforePrompt = await messagesDiv.$$eval('div', divs => divs.length);
-console.log(`Number of child divs before prompt: ${childDivCountBeforePrompt}`);
+// const childDivCountBeforePrompt = await messagesDiv.$$eval('div', divs => divs.length);
+// console.log(`Number of child divs before prompt: ${childDivCountBeforePrompt}`);
 
 // Type text into the contenteditable div
 // await page.locator('#text-input').type('Your text here');
@@ -78,6 +74,10 @@ await page.locator('#text-input').fill('Your text here');
 // Click the button with the specified selector
 console.log('Click the button');
 await page.locator('#input > div:nth-child(5) > div').click();
+
+// Get the element with ID 'messages'
+console.log('Get the element with ID');
+const messagesDiv = await page.$('#messages');
 
 
 
