@@ -2,10 +2,11 @@ const { test, expect } = require('@playwright/test');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-test('valid OPENAI API KEY', async ({ page }) => {
+test('Does prompt cause response', async ({ page }) => {
 
 
-  console.log("OPENAI_API_KEY", OPENAI_API_KEY);
+    console.log("OPENAI_API_KEY", OPENAI_API_KEY);
+    console.log("test name", "does_prompt_cause_response");
   
   // 1. Navigate to the page
   await page.goto('/', { waitUntil: 'networkidle' });
@@ -58,22 +59,29 @@ test('valid OPENAI API KEY', async ({ page }) => {
 
 
 // Wait for navigation to complete
+console.log('page.waitForLoadState');
 await page.waitForLoadState('networkidle');
 
 // Type text into the contenteditable div
-await page.locator('#text-input').type('Your text here');
+// await page.locator('#text-input').type('Your text here');
+console.log('fill');
+await page.locator('#text-input').fill('Your text here');
 
 // Click the button with the specified selector
+console.log('Click the button');
 await page.locator('#input > div:nth-child(5) > div').click();
 
 
   // Get the element with ID 'messages'
+  console.log('Get the element with ID');
   const messagesDiv = await page.$('#messages');
 
   // Count the number of direct div children
+  console.log('Count the number of direct div children');
   const childDivCount = await messagesDiv.$$eval('div', divs => divs.length);
 
   // Log the count
+  console.log('Log the count');
   console.log(`Number of child divs: ${childDivCount}`);
 
   // Optional: Add an assertion if you expect a specific number of children

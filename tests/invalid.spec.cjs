@@ -2,6 +2,9 @@
 const { test, expect } = require('@playwright/test');
 
 test('invalid OPENAI API KEY', async ({ page }) => {
+
+  console.log("test name", "invalid OPENAI API KEY");
+
   // 1. Navigate to the page
   await page.goto('/', { waitUntil: 'networkidle' });
   

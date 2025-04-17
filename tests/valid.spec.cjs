@@ -5,6 +5,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 test('valid OPENAI API KEY', async ({ page }) => {
 
+  console.log("test name", "valid OPENAI API KEY");
 
   console.log("OPENAI_API_KEY", OPENAI_API_KEY);
   
