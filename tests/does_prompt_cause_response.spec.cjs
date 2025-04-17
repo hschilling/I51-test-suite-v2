@@ -1,4 +1,3 @@
-// tests/invalid.spec.cjs (updated version)
 const { test, expect } = require('@playwright/test');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -59,7 +58,7 @@ test('valid OPENAI API KEY', async ({ page }) => {
 
 
 // Wait for navigation to complete
-await page.waitForNavigation();
+await page.waitForLoadState('networkidle');
 
 // Type text into the contenteditable div
 await page.locator('#text-input').type('Your text here');
