@@ -6,7 +6,7 @@ test('Does prompt cause response', async ({ page }) => {
 
 
     console.log("OPENAI_API_KEY", OPENAI_API_KEY);
-    console.log("test name", "does_prompt_cause_response");
+    console.log("test name: does_prompt_cause_response");
   
   // 1. Navigate to the page
   await page.goto('/', { waitUntil: 'networkidle' });
@@ -62,6 +62,14 @@ test('Does prompt cause response', async ({ page }) => {
 console.log('page.waitForLoadState');
 await page.waitForLoadState('networkidle');
 
+// Get the element with ID 'messages'
+console.log('Get the element with ID');
+const messagesDiv = await page.$('#messages');
+
+// count the number of div children before entering prompt
+const childDivCountBeforePrompt = await messagesDiv.$$eval('div', divs => divs.length);
+console.log(`Number of child divs before prompt: ${childDivCountBeforePrompt}`);
+
 // Type text into the contenteditable div
 // await page.locator('#text-input').type('Your text here');
 console.log('fill');
@@ -72,17 +80,13 @@ console.log('Click the button');
 await page.locator('#input > div:nth-child(5) > div').click();
 
 
-  // Get the element with ID 'messages'
-  console.log('Get the element with ID');
-  const messagesDiv = await page.$('#messages');
 
-  // Count the number of direct div children
+  // Count the number of direct div children after prompt
   console.log('Count the number of direct div children');
   const childDivCount = await messagesDiv.$$eval('div', divs => divs.length);
 
   // Log the count
-  console.log('Log the count');
-  console.log(`Number of child divs: ${childDivCount}`);
+  console.log(`Number of child divs after prompt: ${childDivCount}`);
 
   // Optional: Add an assertion if you expect a specific number of children
   expect(childDivCount).toBeGreaterThan(0); // or use .toBe(expectedNumber)
