@@ -103,14 +103,14 @@ const semanticScholarRequestPromise = page.waitForRequest(request => {
 
 
 
-
-
 // Click the button with the specified selector
 console.log('Click the button');
 await page.locator('#input > div:nth-child(5) > div').click();
 
 // Add a 10-second delay/wait
 await page.waitForTimeout(2000); // time in milliseconds (10000ms = 10 seconds)
+
+
 
 const childDivCountAfterClick = await messagesDiv.$$eval('div', divs => divs.length);
 console.log(`Number of child divs after click: ${childDivCountAfterClick}`);
