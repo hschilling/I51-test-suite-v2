@@ -8,11 +8,6 @@ test('Does prompt cause BIDARA to make a call to the Semantic Scholar API', asyn
     console.log("OPENAI_API_KEY", OPENAI_API_KEY);
     console.log("test name: does_prompt_cause_response");
 
-    const semanticScholarRequestPromise = page.waitForRequest(request => {
-        return request.url().startsWith('https://api.semanticscholar.org/graph/v1/paper/search?');
-      }, { timeout: 10000 });
-    
-  
   // 1. Navigate to the page
   await page.goto('/', { waitUntil: 'networkidle' });
   
@@ -100,6 +95,15 @@ console.log(`Number of child divs after fill: ${childDivCountAfterFill}`);
 // console.log('Get the element with ID after fill');
 // const messagesDiv2 = await page.$('#messages');
 // console.log("messagesDiv after fill", messagesDiv2);
+
+
+const semanticScholarRequestPromise = page.waitForRequest(request => {
+    return request.url().startsWith('https://api.semanticscholar.org/graph/v1/paper/search?');
+  }, { timeout: 10000 });
+
+
+
+
 
 // Click the button with the specified selector
 console.log('Click the button');
